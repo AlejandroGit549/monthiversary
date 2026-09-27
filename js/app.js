@@ -20,9 +20,9 @@ const publishedContent = {
     }
   ],
   collage: [
-    { src: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=85', alt: 'Flores de ejemplo para el collage', note: 'Foto de ejemplo: reemplázala por una de ustedes.' },
-    { src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=900&q=85', alt: 'Flores de una celebración de ejemplo', note: 'Otra foto de ejemplo: agrega aquí su recuerdo.' },
-    { src: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&q=85', alt: 'Detalle para celebrar dos meses', note: 'Nuestro segundo mes juntos: una foto especial de este día.' }
+    { src: 'https://i.ibb.co/60XL87TD/IMG-3703.jpg', alt: 'Enamorados', note: 'Una noche especial juntos.' },
+    { src: 'https://i.ibb.co/6JN6J6zd/IMG-3753.jpg', alt: 'Celebración juntos', note: 'Celebrando juntos.' },
+    { src: 'https://i.ibb.co/9mFbmPB0/80227126-3ed4-4049-88e9-68d0ba04ea6a.jpg', alt: 'Detalle', note: 'Nuestro segundo mes juntos: una foto especial de este día.' }
   ]
 };
 const defaultState = { names: publishedContent.names, startDate: publishedContent.startDate, memories: [] };
