@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f3">
+  <meta name="description" content="Un rincón para celebrar cada mes y guardar los recuerdos que importan.">
+  <title>Monthiversary | Nuestro mes a mes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,20,1;9..144,600,20,1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="#inicio" aria-label="Monthiversary, ir al inicio"><span class="wordmark-mark">✳</span> monthiversary<span class="wordmark-dot">.</span></a>
+      <button class="header-action" id="open-settings" type="button" style="display: none;"><i data-lucide="settings-2" aria-hidden="true"></i><span>Personalizar</span></button>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="intro content-width" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> UN MES A LA VEZ, PARA SIEMPRE</div>
+        <p class="couple-name" id="couple-name">Tú + yo</p>
+        <h1 id="page-title">Lo bonito de <em>coincidir.</em></h1>
+        <p class="intro-description">Hay historias que merecen celebrarse todos los meses. Este es nuestro rincón para recordar las pequeñas cosas que lo hacen todo.</p>
+        <div class="intro-actions">
+          <button class="primary-button" id="open-settings-intro" type="button" disabled><i data-lucide="heart" aria-hidden="true"></i> Nuestra fecha</button>
+          <span class="start-label" id="start-label">Cada historia empieza en algún lugar.</span>
+        </div>
+      </div>
+      <div class="photo-panel" aria-label="Una pareja disfrutando de un momento juntos">
+        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1100&q=85" alt="Pareja abrazada al aire libre" fetchpriority="high">
+        <span class="photo-caption">los días contigo <span aria-hidden="true">♥</span></span>
+        <span class="photo-sticker" aria-hidden="true">aquí &<br>ahora</span>
+      </div>
+    </section>
+
+    <section class="milestones" aria-label="Nuestra historia en números">
+      <div class="milestones-inner content-width">
+        <div class="milestone-heading"><span class="section-kicker">EL TIEMPO VUELA CONTIGO</span><h2>Cada día cuenta.</h2></div>
+        <div class="milestone"><span class="milestone-number" id="months-count">00</span><span class="milestone-label">meses compartidos</span></div>
+        <div class="milestone"><span class="milestone-number" id="days-count">--</span><span class="milestone-label">días para el próximo</span></div>
+        <div class="next-milestone"><i data-lucide="calendar-heart" aria-hidden="true"></i><span>Próxima celebración<strong id="next-date">Elige su fecha de inicio</strong></span></div>
+      </div>
+    </section>
+
+    <section class="memories content-width" id="recuerdos" aria-labelledby="memories-title">
+      <div class="section-heading">
+        <div><span class="section-kicker">LOS MOMENTOS QUE QUEDAN</span><h2 id="memories-title">Nuestro álbum <em>de instantes.</em></h2></div>
+        <button class="secondary-button" id="open-memory" type="button" style="display: none;"><i data-lucide="plus" aria-hidden="true"></i> Añadir recuerdo</button>
+      </div>
+      <div class="empty-memories" id="empty-memories">
+        <div class="empty-photo"><img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=800&q=85" alt="Flores iluminadas por el sol" loading="lazy"><span>01 / infinitos</span></div>
+        <div class="empty-copy"><span class="handwritten">Para no olvidar...</span><h3>Las mejores historias se construyen de momentos pequeños.</h3><p>Una cita improvisada, una canción, ese día que todavía te hace sonreír. Guarda aquí el primero.</p><button class="text-button" id="open-memory-empty" type="button">Escribir nuestro primer recuerdo <i data-lucide="arrow-up-right" aria-hidden="true"></i></button></div>
+      </div>
+      <div class="memory-list" id="memory-list" aria-live="polite"></div>
+      <div class="slider-controls" id="notes-controls" hidden><span class="slide-count" id="notes-count" aria-live="polite"></span><div class="slider-buttons"><button class="slider-button" id="notes-prev" type="button" aria-label="Nota anterior" title="Nota anterior"><i data-lucide="arrow-left" aria-hidden="true"></i></button><button class="slider-button" id="notes-next" type="button" aria-label="Nota siguiente" title="Nota siguiente"><i data-lucide="arrow-right" aria-hidden="true"></i></button></div></div>
+    </section>
+
+    <section class="poems" id="poemas" aria-labelledby="poems-title">
+      <div class="content-width poems-inner">
+        <div class="poems-intro"><span class="section-kicker">PALABRAS PARA GUARDAR</span><h2 id="poems-title">Lo que no cabe <em>en un te quiero.</em></h2><p>Hay cosas que solo se pueden decir despacio.</p><span class="poems-ornament" aria-hidden="true">✳</span></div>
+        <div class="poem-list" id="poem-list"></div>
+        <p class="empty-poems" id="empty-poems" hidden>Pronto habrá palabras para este lugar.</p>
+      </div>
+    </section>
+
+    <section class="collage content-width" id="collage" aria-labelledby="collage-title">
+      <div class="collage-heading"><span class="section-kicker">PEDACITOS DE NOSOTROS</span><h2 id="collage-title">Nuestro collage <em>de recuerdos.</em></h2><p>Imágenes y palabras de los días que queremos volver a vivir.</p></div>
+      <div class="collage-list" id="collage-list"></div>
+      <div class="slider-controls" id="photos-controls" hidden><span class="slide-count" id="photos-count" aria-live="polite"></span><div class="slider-buttons"><button class="slider-button" id="photos-prev" type="button" aria-label="Foto anterior" title="Foto anterior"><i data-lucide="arrow-left" aria-hidden="true"></i></button><button class="slider-button" id="photos-next" type="button" aria-label="Foto siguiente" title="Foto siguiente"><i data-lucide="arrow-right" aria-hidden="true"></i></button></div></div>
+      <div class="collage-empty" id="empty-collage"><div class="collage-empty-photo"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=900&q=85" alt="Flores en una celebración" loading="lazy"></div><p>Por todas las fotos que nos faltan por tomar.<span>Jess & Ale · desde 2026</span></p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="content-width footer-inner"><span class="wordmark">✳ monthiversary<span class="wordmark-dot">.</span></span><span>Hecho para volver a elegirnos, mes a mes.</span></div></footer>
+
+  <dialog id="settings-dialog" class="editor-dialog" aria-labelledby="settings-title">
+    <form id="settings-form">
+      <div class="dialog-heading"><span class="section-kicker">HAGÁMOSLO NUESTRO</span><button class="icon-button" data-close type="button" aria-label="Cerrar"><i data-lucide="x" aria-hidden="true"></i></button></div>
+      <h2 id="settings-title">Nuestra historia comienza aquí.</h2>
+      <label for="names-input">Sus nombres</label><input id="names-input" name="names" maxlength="45" placeholder="Ej. Ana + Alex" autocomplete="off">
+      <label for="start-input">¿Cuándo comenzó todo?</label><input id="start-input" name="start" type="date" required>
+      <button class="primary-button form-submit" type="submit">Guardar nuestra fecha <i data-lucide="arrow-right" aria-hidden="true"></i></button>
+    </form>
+  </dialog>
+
+  <dialog id="memory-dialog" class="editor-dialog" aria-labelledby="memory-title">
+    <form id="memory-form">
+      <div class="dialog-heading"><span class="section-kicker">UN MOMENTO PARA GUARDAR</span><button class="icon-button" data-close type="button" aria-label="Cerrar"><i data-lucide="x" aria-hidden="true"></i></button></div>
+      <h2 id="memory-title">Cuéntame ese día.</h2>
+      <label for="memory-date">Fecha</label><input id="memory-date" name="date" type="date" required>
+      <label for="memory-title-input">Nombre del recuerdo</label><input id="memory-title-input" name="title" maxlength="60" placeholder="Ej. Nuestra primera escapada" required>
+      <label for="memory-note">Lo que no quieres olvidar</label><textarea id="memory-note" name="note" rows="4" maxlength="500" placeholder="Todo empezó cuando..." required></textarea>
+      <button class="primary-button form-submit" type="submit">Guardar recuerdo <i data-lucide="heart" aria-hidden="true"></i></button>
+    </form>
+  </dialog>
+</body>
+</html>
