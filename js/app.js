@@ -20,6 +20,7 @@ const publishedContent = {
     }
   ],
   poems: [
+    // --- Originales ---
     {
       title: 'Desde aquel 27',
       text: 'Desde aquel 27 de julio,\nel tiempo aprendió otro idioma:\nuno que se dice en miradas\ny se escribe con nuestros días.',
@@ -29,24 +30,141 @@ const publishedContent = {
       title: 'Dos meses de luz',
       text: 'Dos meses han pasado ya,\ny en cada instante compartido,\nconfirmas que el mejor lugar\nes coincidir en el camino.',
       signature: 'Con todo mi amor'
+    },
+
+    // --- Nuevos (20) ---
+    {
+      title: 'Mapa sin norte',
+      text: 'Yo andaba sin brújula ni rumbo,\nhasta que tu risa fue mi norte;\ny ahora cualquier camino\nme lleva a donde estás tú.',
+      signature: 'Para Jess y Ale'
+    },
+    {
+      title: 'Casualidad con destino',
+      text: 'Dicen que fue casualidad,\npero yo sé que el universo\nmovió sus piezas con cuidado\npara sentarnos en el mismo tiempo.',
+      signature: 'Con todo mi amor'
+    },
+    {
+      title: 'Lenguaje de silencios',
+      text: 'Contigo aprendí que el silencio\nno es vacío ni distancia:\nes una forma tranquila\nde decir que aquí me quedo.',
+      signature: 'Con cariño'
+    },
+    {
+      title: 'Cada mañana',
+      text: 'Amanece distinto desde que existes,\nel sol llega con tu nombre\ny cada día que comienza\nme parece una promesa.',
+      signature: 'Con todo mi amor'
+    },
+    {
+      title: 'Brújula de dos',
+      text: 'Si algún día me pierdo,\nbúscame en tu mirada;\nahí siempre estuvo el camino\nque mi corazón buscaba.',
+      signature: 'Para Jess y Ale'
+    },
+    {
+      title: 'Fecha favorita',
+      text: 'Hay fechas que se olvidan\ny fechas que se quedan;\nel veintisiete de julio\nse volvió mi favorita.',
+      signature: 'Siempre contigo'
+    },
+    {
+      title: 'Paciencia y flores',
+      text: 'El amor es un jardín\nque se riega sin apuro:\ncon paciencia, con ternura\ny con ganas de quedarse.',
+      signature: 'Con cariño'
+    },
+    {
+      title: 'Cielo compartido',
+      text: 'Aunque a veces estemos lejos,\nmiramos la misma luna;\ny en ese cielo tan nuestro\nnos encontramos sin prisa.',
+      signature: 'Para Jess y Ale'
+    },
+    {
+      title: 'Lo que eres',
+      text: 'Eres calma en mis tormentas,\neres risa en mis cansancios,\neres el mejor motivo\npara sonreír sin razón.',
+      signature: 'Con todo mi amor'
+    },
+    {
+      title: 'Latidos',
+      text: 'Mi corazón tenía un ritmo\nque no sabía bailar;\nhasta que llegaste tú\ny le enseñaste a latir.',
+      signature: 'Siempre tuyo'
+    },
+    {
+      title: 'Tinta y tiempo',
+      text: 'Si el tiempo fuera un cuaderno,\nte escribiría en cada hoja;\ny aun así faltarían páginas\npara contar lo que me das.',
+      signature: 'Para Jess y Ale'
+    },
+    {
+      title: 'Contigo es fácil',
+      text: 'Contigo todo se vuelve ligero:\nlas prisas, las dudas, el miedo;\nse quedan afuera del cuarto\ny entra solo lo bonito.',
+      signature: 'Con cariño'
+    },
+    {
+      title: 'Promesa pequeña',
+      text: 'No te prometo el mundo entero,\nsolo cuidarte cada día,\nescucharte cuando hables\ny elegirte todavía.',
+      signature: 'Con todo mi amor'
+    },
+    {
+      title: 'Estaciones',
+      text: 'Que lleguen todas las estaciones,\nel frío, la lluvia y el verano;\nmientras sea a tu lado\ntodas me saben a hogar.',
+      signature: 'Para Jess y Ale'
+    },
+    {
+      title: 'Gracias',
+      text: 'Gracias por quedarte, por reír,\npor sostenerme en lo difícil;\ncontigo hasta lo cotidiano\nse viste de milagro.',
+      signature: 'Siempre contigo'
+    },
+    {
+      title: 'Pequeña eternidad',
+      text: 'Un abrazo, un beso, un te quiero,\ny el reloj se detiene un rato;\nasí se ve la eternidad\ncuando se vive de a dos.',
+      signature: 'Con todo mi amor'
+    },
+    {
+      title: 'Lo que viene',
+      text: 'No sé qué nos traerá el mañana,\npero sé que quiero vivirlo\ncon tu mano entre mis dedos\ny tu risa como brújula.',
+      signature: 'Para Jess y Ale'
+    },
+    {
+      title: 'Aquí y ahora',
+      text: 'No pido más de lo que tengo:\nun hoy contigo a mi lado,\nun mañana por escribir\ny un corazón agradecido.',
+      signature: 'Te elijo a ti. '
     }
   ],
   songs: [],
   collage: [
     {
-      src: 'https://i.ibb.co/60XL87TD/IMG-3703.jpg',
-      alt: 'Enamorados',
-      note: 'Una noche especial juntos.'
+      src: 'https://i.ibb.co/93cvJmKW/IMG-2966.jpg',
+      alt: 'Momento juntos',
+      note: 'Uno de esos momentos que se quedan guardados para siempre.'
     },
     {
-      src: 'https://i.ibb.co/6JN6J6zd/IMG-3753.jpg',
-      alt: 'Celebración juntos',
-      note: 'Celebrando juntos.'
+      src: 'https://i.ibb.co/PZtP2fhQ/IMG-2972.jpg',
+      alt: 'Sonrisas compartidas',
+      note: 'Sonrisas compartidas, la mejor parte de cualquier día.'
     },
     {
-      src: 'https://i.ibb.co/9mFbmPB0/80227126-3ed4-4049-88e9-68d0ba04ea6a.jpg',
-      alt: 'Detalle',
-      note: 'Nuestro segundo mes juntos: una foto especial de este día.'
+      src: 'https://i.ibb.co/nq8M8K2Z/IMG-3695.jpg',
+      alt: 'Noche juntos',
+      note: 'Una noche más que se volvió recuerdo.'
+    },
+    {
+      src: 'https://i.ibb.co/PZtfjryZ/IMG-3702.jpg',
+      alt: 'Nosotros',
+      note: 'Tú y yo, sin necesidad de más.'
+    },
+    {
+      src: 'https://i.ibb.co/KHmj0yC/IMG-3725.jpg',
+      alt: 'Instante especial',
+      note: 'Un instante especial a tu lado.'
+    },
+    {
+      src: 'https://i.ibb.co/gb6XVNWm/IMG-3735.jpg',
+      alt: 'Juntos otra vez',
+      note: 'Contigo hasta lo sencillo se siente increíble.'
+    },
+    {
+      src: 'https://i.ibb.co/NdfKsFQx/IMG-3760.jpg',
+      alt: 'Tarde juntos',
+      note: 'Una tarde para recordar.'
+    },
+    {
+      src: 'https://i.ibb.co/gMd3R31Y/IMG-3763.jpg',
+      alt: 'Recuerdo bonito',
+      note: 'Otro recuerdo bonito que nos llevamos.'
     }
   ]
 }
