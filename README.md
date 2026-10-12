@@ -1,6 +1,6 @@
 # Monthiversary
 
-Página estática para Jess y Ale. Abre [index.html](index.html) directamente en el navegador o publícala junto con las carpetas `css` y `js` en cualquier alojamiento de sitios estáticos.
+Página para Jess y Ale. Para probarla con autenticación y sincronización, sírvela por HTTP (por ejemplo, con Live Server) y publícala junto con las carpetas `css`, `js` y `supabase` en un alojamiento estático.
 
 ## Contenido para publicar
 
@@ -10,7 +10,7 @@ Edita el objeto `publishedContent` al principio de [js/app.js](js/app.js). La fe
 { title: 'Otro poema', text: 'Primer verso\nSegundo verso', signature: 'Para Ale' }
 ```
 
-Las notas del carrusel están en `notes`. Añade tantos objetos como necesites; el contador y las flechas se actualizan solos:
+Las notas iniciales del carrusel están en `notes`. Las notas nuevas se agregan desde el formulario y se guardan localmente o en Supabase:
 
 ```js
 { date: '2026-09-27', title: 'Otro mes juntos', note: 'Lo que quiero recordar de este día.' }
@@ -22,6 +22,18 @@ Para el collage, coloca tus imágenes en una carpeta `fotos` al lado de `index.h
 { src: 'fotos/nuestro-dia.jpg', alt: 'Jess y Ale juntos', note: 'Un día que siempre recordaré.' }
 ```
 
-Reemplaza las dos fotos de ejemplo de `collage` por tus propias imágenes y textos. La galería muestra una foto a la vez; sus flechas recorren automáticamente todas las entradas del arreglo. Incluye la carpeta `fotos` al publicar.
+Reemplaza las fotos de `collage` por tus propias imágenes y textos. La galería muestra una foto centrada con navegación táctil, teclado y paginación. Incluye la carpeta `fotos` al publicar.
 
-Las notas, poemas y fotos definidos en JavaScript aparecerán para todos al publicar los archivos. Las notas añadidas desde el botón de la página, y los cambios hechos mediante **Personalizar**, se guardan solo en el navegador actual; para publicarlos para todos, incorpóralos al código. Si una edición de nombres o fecha no se refleja en tu navegador, borra los datos locales del sitio. Las imágenes de ejemplo y las fuentes externas requieren conexión a internet; las fotos propias guardadas en `fotos` no.
+## Supabase
+
+Supabase permite consultar las notas y canciones desde varios dispositivos usando la misma cuenta.
+
+1. Crea un proyecto de Supabase y ejecuta [supabase/schema.sql](supabase/schema.sql) desde el SQL Editor.
+2. En **Project Settings > API**, copia la Project URL y la clave `anon`/publishable en [js/config.js](js/config.js). No pongas la clave `service_role` en el sitio.
+3. Habilita Email en **Authentication > Providers**. Crea o permite la cuenta de correo que usarás en ambos dispositivos.
+4. En **Authentication > URL Configuration**, agrega las URLs locales y de producción a Redirect URLs. Para enlaces mágicos, sirve la página por HTTP/HTTPS; `file://` no sirve como URL de retorno.
+5. Publica la página. Pulsa **Sincronizar** e inicia sesión con el mismo correo en cada dispositivo.
+
+Las políticas de la tabla aíslan los datos por usuario autenticado. Solo la misma cuenta puede leer, guardar y borrar sus notas/canciones. Al iniciar sesión, las notas y canciones que se guardaron localmente se migran una vez a Supabase. Sin configurar Supabase, la página sigue funcionando con `localStorage`, pero muestra que los datos solo están en ese navegador.
+
+Las canciones aceptan enlaces HTTPS de YouTube o Spotify. Los poemas, imágenes y contenido inicial siguen definidos en `publishedContent` dentro de [js/app.js](js/app.js). Swiper, Supabase JS, Lucide, las fuentes y las imágenes remotas requieren conexión a internet.
