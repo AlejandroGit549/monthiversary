@@ -1,0 +1,30 @@
+<p id="msg">Verificando…</p>
+<script type="module">
+ const config = window.MONTHIVERSARY_CONFIG || {}
+  const supabase = createClient(config.supabaseUrl, config.supabaseAnonKey)
+  const msg = document.querySelector('#msg')
+
+  // Errores (link expirado, ya usado, etc.)
+  const hash = new URLSearchParams(location.hash.slice(1))
+  const query = new URLSearchParams(location.search)
+  const err = hash.get('error_description') || query.get('error_description')
+  if (err) {
+    msg.textContent = 'Error: ' + err.replace(/\+/g, ' ')
+  } else {
+    // Si usas PKCE, el link trae ?code=
+    const code = query.get('code')
+    if (code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code)
+      if (error) msg.textContent = 'Error: ' + error.message
+    }
+
+    // Verificación contra el servidor
+    const { data: { user }, error } = await supabase.auth.getUser()
+    if (user?.email_confirmed_at) {
+      msg.textContent = '¡Correo confirmado!'
+      setTimeout(() => location.replace('/dashboard.html'), 1000)
+    } else if (error) {
+      msg.textContent = 'No se pudo verificar la sesión.'
+    }
+  }
+</script>
