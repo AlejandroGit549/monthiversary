@@ -924,7 +924,7 @@ if (typeof document !== 'undefined') {
       feedback.textContent = 'Solicitando el enlace…'
       const { error } = await supabaseClient.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: window.location.href.split('#')[0] }
+        options: { emailRedirectTo: new URL('callback.html', window.location.href).href }
       })
       if (error?.code === 'over_email_send_rate_limit') {
         startAuthCooldown(60)

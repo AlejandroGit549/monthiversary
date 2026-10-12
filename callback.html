@@ -1,30 +1,78 @@
-<p id="msg">Verificando…</p>
-<script type="module">
- const config = window.MONTHIVERSARY_CONFIG || {}
-  const supabase = createClient(config.supabaseUrl, config.supabaseAnonKey)
-  const msg = document.querySelector('#msg')
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf7fd">
+  <title>Verificando acceso | Monthiversary</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="callback-body">
+  <main class="callback-page">
+    <a class="wordmark" href="index.html"><span class="wordmark-mark">✳</span> monthiversary<span class="wordmark-dot">.</span></a>
+    <section class="callback-card" aria-live="polite">
+      <span class="section-kicker">UN MOMENTO</span>
+      <h1 id="callback-title">Confirmando tu acceso.</h1>
+      <p id="msg">Estamos verificando el enlace de Supabase.</p>
+      <a id="return-link" href="index.html" hidden>Volver a Monthiversary</a>
+    </section>
+  </main>
 
-  // Errores (link expirado, ya usado, etc.)
-  const hash = new URLSearchParams(location.hash.slice(1))
-  const query = new URLSearchParams(location.search)
-  const err = hash.get('error_description') || query.get('error_description')
-  if (err) {
-    msg.textContent = 'Error: ' + err.replace(/\+/g, ' ')
-  } else {
-    // Si usas PKCE, el link trae ?code=
-    const code = query.get('code')
-    if (code) {
-      const { error } = await supabase.auth.exchangeCodeForSession(code)
-      if (error) msg.textContent = 'Error: ' + error.message
-    }
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script>
+    (async () => {
+      const message = document.querySelector('#msg')
+      const title = document.querySelector('#callback-title')
+      const returnLink = document.querySelector('#return-link')
+      const config = window.MONTHIVERSARY_CONFIG || {}
+      const query = new URLSearchParams(window.location.search)
+      const hash = new URLSearchParams(window.location.hash.slice(1))
+      const authError = hash.get('error_description') || query.get('error_description')
 
-    // Verificación contra el servidor
-    const { data: { user }, error } = await supabase.auth.getUser()
-    if (user?.email_confirmed_at) {
-      msg.textContent = '¡Correo confirmado!'
-      setTimeout(() => location.replace('/dashboard.html'), 1000)
-    } else if (error) {
-      msg.textContent = 'No se pudo verificar la sesión.'
-    }
-  }
-</script>
+      function showError (text) {
+        title.textContent = 'No se pudo confirmar el acceso.'
+        message.textContent = text
+        returnLink.hidden = false
+      }
+
+      if (authError) {
+        showError(authError.replace(/\+/g, ' '))
+        return
+      }
+      if (!window.supabase?.createClient || !config.supabaseUrl || !config.supabaseAnonKey) {
+        showError('Falta configurar Supabase. Revisa js/config.js e inténtalo de nuevo.')
+        return
+      }
+
+      const client = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey)
+      const { data, error } = await client.auth.getSession()
+      let session = data?.session
+
+      if (!session && query.has('code')) {
+        const exchange = await client.auth.exchangeCodeForSession(query.get('code'))
+        session = exchange.data?.session
+        if (exchange.error) {
+          showError('El enlace expiró o ya se utilizó. Solicita uno nuevo desde la página.')
+          return
+        }
+      }
+
+      if (error || !session) {
+        showError('El enlace no es válido o expiró. Solicita uno nuevo desde Monthiversary.')
+        return
+      }
+
+      title.textContent = '¡Acceso confirmado!'
+      message.textContent = 'Tus recuerdos ya pueden sincronizarse. Volviendo a la página…'
+      window.setTimeout(() => {
+        window.location.replace(new URL('index.html', window.location.href).href)
+      }, 1200)
+    })().catch(() => {
+      document.querySelector('#callback-title').textContent = 'No se pudo confirmar el acceso.'
+      document.querySelector('#msg').textContent = 'Ocurrió un error al verificar la sesión. Solicita un enlace nuevo.'
+      document.querySelector('#return-link').hidden = false
+    })
+  </script>
+</body>
+</html>
