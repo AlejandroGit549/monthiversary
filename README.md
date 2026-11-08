@@ -1,30 +1,24 @@
 # Monthiversary
 
-Página de aniversario para Jess y Ale. La interfaz sigue el diseño lila, romántico y editorial de la referencia: contador, línea de tiempo, galería, razones, poemas, notas, playlist y cartas. Sirve el contenido público desde Supabase y permite editarlo desde un panel protegido con Supabase Auth.
+Página de aniversario para Jess y Ale. La interfaz conserva el diseño lila, romántico y editorial de la referencia. La playlist, notas, poemas, cartas, fotos y demás secciones se guardan juntas como contenido compartido en Supabase.
 
 ## Configuración de Supabase
 
-1. Crea un proyecto y ejecuta [`supabase/schema.sql`](supabase/schema.sql) completo en **SQL Editor**. Esto configura las tablas, las políticas RLS y el bucket público `anniversary-media`.
-2. En **Project Settings > API**, coloca la Project URL y la clave **publishable/anon** en [`js/config.js`](js/config.js). La clave de navegador es pública; nunca uses ni publiques la clave `service_role`.
-3. En **Authentication > Providers**, habilita Email. En **Authentication > URL Configuration**, configura el sitio publicado como Site URL y agrega las URLs de desarrollo y producción a Redirect URLs. Sirve el sitio por HTTP/HTTPS; los enlaces de acceso no funcionan con `file://`.
-4. Publica `index.html`, `callback.html` y las carpetas `css`, `js` y `supabase` en un hosting estático.
-5. Abre el sitio, pulsa **Gestión** e inicia sesión con el correo que será administrador. Abre el enlace mágico que llegará al correo.
-6. En Supabase, abre **Authentication > Users**, copia el UUID del usuario y autorízalo en SQL Editor:
+1. Confirma que estos dos UUID existan en **Authentication > Users**:
+   - `6e4ee8a5-dccb-42bc-83b4-f7870b85f007`
+   - `e108228f-2db6-4567-bc3b-dc84d6b0acb6`
+2. Ejecuta o vuelve a ejecutar [`supabase/schema.sql`](supabase/schema.sql) completo en el **SQL Editor**. El esquema configura las tablas, las políticas RLS y el bucket `anniversary-media`; también autoriza esos dos usuarios y revoca el acceso de gestión a cualquier otro UUID. Si falta uno de los usuarios, el SQL se detendrá con un error explícito.
+3. En **Project Settings > API**, configura la Project URL y la clave **publishable/anon** en [`js/config.js`](js/config.js). Esa clave es pública para el navegador; nunca uses ni publiques la clave `service_role`.
+4. Habilita Email en **Authentication > Providers**. En **Authentication > URL Configuration**, configura el sitio publicado como Site URL y agrega las URLs de desarrollo y producción a Redirect URLs. Sirve el sitio por HTTP/HTTPS; los enlaces de acceso no funcionan con `file://`.
+5. Publica `index.html`, `callback.html` y las carpetas `css`, `js` y `supabase` en un hosting estático.
+6. Cada usuario autorizado inicia sesión con el correo asociado a su UUID. Ambos gestionan desde **Gestión** la misma playlist y pueden cargar música, cartas, notas, poemas, hitos, razones y fotos. Los cambios se comparten entre los dos; solo esos UUID pueden modificarlos. Las fotos cargadas usan el bucket público y el límite es 8 MB.
 
-   ```sql
-   insert into public.anniversary_admins (user_id)
-   values ('UUID_DEL_USUARIO')
-   on conflict (user_id) do nothing;
-   ```
+El contenido del sitio vive en `public.anniversary_content` y se puede leer públicamente. Las escrituras del contenido, de las entradas heredadas y del almacenamiento de imágenes están restringidas por RLS a los dos UUID anteriores.
 
-7. Vuelve a cargar el sitio e inicia sesión. El administrador podrá cambiar los nombres, fecha y textos, y agregar, editar o quitar hitos, fotos, razones, poemas, notas, canciones y cartas. También podrá cargar fotos al bucket desde el panel. Si aún no existe contenido en Supabase, se publica el contenido inicial de la aplicación al iniciar sesión.
+## Migración anterior
 
-El contenido del sitio se guarda en `public.anniversary_content`. Cualquier visitante puede leerlo; solo los UUID incluidos en `anniversary_admins` pueden modificarlo. Las imágenes se sirven desde el bucket público y solo un administrador puede cargarlas. El panel valida enlaces de YouTube/Spotify y limita las imágenes a 8 MB.
-
-## Migración de datos anteriores
-
-Al iniciar sesión con una cuenta autorizada, las notas y canciones del almacenamiento local anterior (`monthiversary-v1`) y de `shared_entries` se incorporan al contenido centralizado. El almacenamiento local anterior se elimina solo después de confirmar que el contenido se guardó correctamente en Supabase.
+Al iniciar sesión con cualquiera de las cuentas autorizadas, las notas y canciones de esa cuenta en el almacenamiento local anterior (`monthiversary-v1`) y en `shared_entries` se incorporan a la lista compartida. El almacenamiento local anterior se elimina solo después de confirmar el guardado en Supabase.
 
 ## Desarrollo local
 
-Sirve la carpeta mediante Live Server u otro servidor HTTP local. Añade la URL resultante (incluido el callback `callback.html`) a **Redirect URLs** en Supabase. Si Supabase no está configurado o todavía no se ha aplicado el esquema, la página muestra el contenido inicial y el estado de conexión correspondiente.
+Sirve la carpeta mediante Live Server u otro servidor HTTP local y agrega esa URL, incluido `callback.html`, a **Redirect URLs** en Supabase.

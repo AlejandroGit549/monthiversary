@@ -16,6 +16,42 @@ create policy "Admins can read their own access"
 
 grant select on public.anniversary_admins to authenticated;
 
+-- Only these two existing Supabase Auth users can manage the shared site.
+do $$
+begin
+  if exists (
+    select allowed.user_id
+    from (
+      values
+        ('6e4ee8a5-dccb-42bc-83b4-f7870b85f007'::uuid),
+        ('e108228f-2db6-4567-bc3b-dc84d6b0acb6'::uuid)
+    ) as allowed(user_id)
+    where not exists (
+      select 1
+      from auth.users
+      where auth.users.id = allowed.user_id
+    )
+  ) then
+    raise exception 'Both configured administrator UUIDs must exist in Authentication > Users before running this schema.';
+  end if;
+end;
+$$;
+
+delete from public.anniversary_admins
+where user_id not in (
+  '6e4ee8a5-dccb-42bc-83b4-f7870b85f007'::uuid,
+  'e108228f-2db6-4567-bc3b-dc84d6b0acb6'::uuid
+);
+
+insert into public.anniversary_admins (user_id)
+select id
+from auth.users
+where id in (
+  '6e4ee8a5-dccb-42bc-83b4-f7870b85f007'::uuid,
+  'e108228f-2db6-4567-bc3b-dc84d6b0acb6'::uuid
+)
+on conflict (user_id) do nothing;
+
 create or replace function public.is_anniversary_admin()
 returns boolean
 language sql
@@ -90,19 +126,28 @@ drop policy if exists "Users can read their own entries" on public.shared_entrie
 create policy "Users can read their own entries"
   on public.shared_entries for select
   to authenticated
-  using ((select auth.uid()) = user_id);
+  using (
+    (select auth.uid()) = user_id
+    and (select public.is_anniversary_admin())
+  );
 
 drop policy if exists "Users can create their own entries" on public.shared_entries;
 create policy "Users can create their own entries"
   on public.shared_entries for insert
   to authenticated
-  with check ((select auth.uid()) = user_id);
+  with check (
+    (select auth.uid()) = user_id
+    and (select public.is_anniversary_admin())
+  );
 
 drop policy if exists "Users can delete their own entries" on public.shared_entries;
 create policy "Users can delete their own entries"
   on public.shared_entries for delete
   to authenticated
-  using ((select auth.uid()) = user_id);
+  using (
+    (select auth.uid()) = user_id
+    and (select public.is_anniversary_admin())
+  );
 
 grant select, insert, delete on public.shared_entries to authenticated;
 
