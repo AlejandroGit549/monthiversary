@@ -539,22 +539,38 @@ if (typeof document !== 'undefined') {
     container.replaceChildren()
     if (!appData.reasons.length) return renderEmpty(container, 'Aquí guardaremos las razones que nos hacen elegirnos.')
     appData.reasons.forEach((reason, index) => {
-      const card = makeElement('button', 'reason-card')
-      card.type = 'button'
+      const card = makeElement('div', 'flip-card')
+      card.tabIndex = 0
+      card.setAttribute('role', 'button')
       card.setAttribute('aria-label', `Descubrir razón ${index + 1}: ${reason.title}`)
-      const inner = makeElement('span', 'reason-inner')
-      const front = makeElement('span', 'reason-front')
-      front.append(makeElement('span', 'reason-number', String(index + 1)), makeElement('span', 'reason-title', reason.title), makeElement('span', '', 'Toca para descubrir'))
-      const back = makeElement('span', 'reason-back')
-      back.append(makeElement('span', '', reason.text))
+      card.setAttribute('aria-pressed', 'false')
+      const inner = makeElement('div', 'flip-card-inner')
+      const front = makeElement('div', 'flip-card-front')
+      front.append(
+        makeElement('span', 'reason-number', `#${index + 1}`),
+        makeElement('h3', '', reason.title)
+      )
+      const hint = makeElement('span', 'reason-hint', 'Toca para descubrir')
+      const hintIcon = makeElement('i')
+      hintIcon.setAttribute('data-lucide', 'rotate-cw')
+      hint.append(hintIcon)
+      front.append(hint)
+      const back = makeElement('div', 'flip-card-back')
+      back.append(makeElement('p', '', reason.text))
       const heart = makeElement('i')
       heart.setAttribute('data-lucide', 'heart')
       back.append(heart)
       inner.append(front, back)
       card.append(inner)
-      card.addEventListener('click', () => {
-        card.classList.toggle('is-flipped')
-        card.setAttribute('aria-pressed', String(card.classList.contains('is-flipped')))
+      const flip = () => {
+        card.classList.toggle('flipped')
+        card.setAttribute('aria-pressed', String(card.classList.contains('flipped')))
+      }
+      card.addEventListener('click', flip)
+      card.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return
+        event.preventDefault()
+        flip()
       })
       container.append(card)
     })
